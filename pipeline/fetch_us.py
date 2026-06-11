@@ -24,6 +24,20 @@ WATCHLIST = [
 ]
 
 
+def load_watchlist():
+    """data/watchlist_us.json se existir; senão a lista embutida (50)."""
+    import pathlib
+    p = pathlib.Path(__file__).resolve().parent.parent / "data" / "watchlist_us.json"
+    if p.exists():
+        try:
+            wl = json.loads(p.read_text(encoding="utf-8")).get("tickers") or []
+            if wl:
+                return wl
+        except Exception:
+            pass
+    return WATCHLIST
+
+
 def _g(d, *keys):
     """primeiro valor não-nulo entre aliases de campo"""
     for k in keys:
@@ -61,7 +75,7 @@ def parse_us(profile, metrics, quote, ticker):
 
 
 def fetch(api_key=None, fixture_dir=None, watchlist=None, pace=1.1):
-    wl = watchlist or WATCHLIST
+    wl = watchlist or load_watchlist()
     out = []
     if fixture_dir:
         fx = pathlib.Path(fixture_dir)
@@ -73,11 +87,20 @@ def fetch(api_key=None, fixture_dir=None, watchlist=None, pace=1.1):
                 continue
             out.append(parse_us(r.get("profile"), r.get("metrics"), r.get("quote"), t))
         return out
-    import urllib.request
+    import urllib.request, urllib.error
     def get(path):
         url = f"{FINNHUB}{path}&token={api_key}" if "?" in path else f"{FINNHUB}{path}?token={api_key}"
-        with urllib.request.urlopen(url, timeout=30) as r:
-            return json.loads(r.read().decode())
+        # ritmo: 60 chamadas/min no free => ~1 chamada/seg, pausando ANTES de cada chamada
+        time.sleep(pace)
+        try:
+            with urllib.request.urlopen(url, timeout=30) as r:
+                return json.loads(r.read().decode())
+        except urllib.error.HTTPError as e:
+            if e.code == 429:  # estourou o limite: espera a janela renovar e tenta 1x
+                time.sleep(20)
+                with urllib.request.urlopen(url, timeout=30) as r:
+                    return json.loads(r.read().decode())
+            raise
     for t in wl:
         try:
             prof = get(f"/stock/profile2?symbol={t}")
@@ -86,7 +109,6 @@ def fetch(api_key=None, fixture_dir=None, watchlist=None, pace=1.1):
             out.append(parse_us(prof, met, quo, t))
         except Exception as e:  # noqa
             out.append({"ticker": t, "erro": str(e)})
-        time.sleep(pace)  # ~3 calls/ticker, 60/min -> folga ampla
     return out
 
 
@@ -117,5 +139,11 @@ def fetch_macro(fixture_dir=None, ntnb_manual=0.07):
         out["usdbrl"] = float(fxj["USDBRL"]["bid"])
     except Exception:
         out["usdbrl"] = None
+    if out["usdbrl"] is None:  # fallback: BCB SGS 1 (dólar comercial venda)
+        try:
+            v = get(BCB_SGS.format(serie=1))
+            out["usdbrl"] = float(v[0]["valor"].replace(",", "."))
+        except Exception:
+            pass
     out["ntnb_real"] = ntnb_manual  # juro real NTN-B: input manual/config
     return out
