@@ -36,6 +36,10 @@ h1 .dot{color:var(--tkr)}
 .tabs button{background:var(--panel);border:1px solid var(--border);color:var(--sub);
   font:600 13px "JetBrains Mono",monospace;padding:9px 16px;border-radius:10px;cursor:pointer}
 .tabs button.on{background:var(--blue);border-color:var(--blue);color:#08101e}
+.tabs a.ext{background:var(--panel);border:1px solid var(--border);color:var(--blue);
+  text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;
+  font-family:inherit;letter-spacing:.04em;margin-left:auto}
+.tabs a.ext+a.ext{margin-left:0}
 
 /* kpis */
 .kpis{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
@@ -107,6 +111,8 @@ tr.owned td:first-child{box-shadow:inset 3px 0 0 var(--g)}
   <button id="t-fiis" onclick="setMkt('fiis')">FIIs</button>
   <button id="t-us" onclick="setMkt('us')">US STOCKS</button>
   <button id="t-carteira" onclick="setMkt('carteira')">💼 CARTEIRA</button>
+  <a class="ext" href="reits.html">US REITs ↗</a>
+  <a class="ext" href="guia.html">GUIA ↗</a>
 </div>
 
 <div id="screener">

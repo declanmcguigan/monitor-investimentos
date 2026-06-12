@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitor · US REITs</title>
+<style>
+:root{
+  --bg:#0b0f14; --panel:#10161e; --panel2:#0d1219; --bd:#1d2733;
+  --tx:#c8d4e0; --dim:#5d6f82; --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+  --ok:#3ddc84; --okbg:#0e2418; --obs:#e8c547; --obsbg:#272008;
+  --caro:#8896a6; --carobg:#161d26; --cui:#ff7849; --cuibg:#2a150c;
+  --a:#e8c547; --abg:#272008; --link:#4fb3ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--mono);font-size:13px;padding:18px 16px 60px}
+.wrap{max-width:1180px;margin:0 auto}
+header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+h1{font-size:16px;font-weight:700;letter-spacing:.06em}
+h1 a{color:var(--link);text-decoration:none}
+#gen{color:var(--dim);font-size:11px}
+.fita{display:flex;gap:18px;flex-wrap:wrap;background:var(--panel2);border:1px solid var(--bd);
+  border-radius:10px;padding:8px 14px;margin:10px 0;font-size:12px}
+.fita b{color:var(--ok)}
+.fita .lbl{color:var(--dim)}
+.aviso{background:var(--abg);border:1px solid var(--a);color:var(--a);padding:8px 14px;
+  border-radius:10px;font-size:12px;margin-bottom:10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chip{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:5px 12px;
+  cursor:pointer;font-size:12px;user-select:none;color:var(--dim)}
+.chip b{color:var(--tx);margin-left:4px}
+.chip.on{border-color:var(--ok);color:var(--tx)}
+.chip.v-COMPRA b{color:var(--ok)} .chip.v-OBSERVAR b{color:var(--obs)}
+.chip.v-CARO b{color:var(--caro)} .chip.v-CUIDADO b{color:var(--cui)}
+.tablewrap{overflow-x:auto;border:1px solid var(--bd);border-radius:10px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:980px}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{color:var(--dim);font-weight:600;font-size:11px;letter-spacing:.04em;cursor:pointer;
+  position:sticky;top:0;background:var(--panel);user-select:none}
+th.l,td.l{text-align:left}
+tr.own td{background:#0e2013}
+tr:hover td{background:#141d28}
+.v{font-weight:700;padding:2px 8px;border-radius:6px;font-size:11px}
+.v-COMPRA{color:var(--ok);background:var(--okbg)} .v-OBSERVAR{color:var(--obs);background:var(--obsbg)}
+.v-CARO{color:var(--caro);background:var(--carobg)} .v-CUIDADO{color:var(--cui);background:var(--cuibg)}
+.v-sd{color:var(--dim)}
+.arm{color:var(--cui);font-size:11px}
+.pos{color:var(--ok)} .neg{color:var(--cui)} .dim{color:var(--dim)}
+.liq{color:var(--obs)}
+.note{color:var(--dim);font-size:11px;margin:8px 2px}
+.setor{color:var(--dim);font-size:11px}
+@media(max-width:640px){body{padding:12px 8px 40px}.fita{gap:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>US REITs <span class="dim">· spread vs UST10Y</span></h1>
+    <span id="gen">carregando…</span>
+    <span style="margin-left:auto"><a href="index.html" style="color:var(--link);font-size:12px">← monitor</a> &nbsp;·&nbsp; <a href="guia.html" style="color:var(--link);font-size:12px">guia</a></span>
+  </header>
+  <div id="aviso" class="aviso" style="display:none"></div>
+  <div class="fita" id="fita"></div>
+  <div class="chips" id="vchips"></div>
+  <div class="chips" id="schips"></div>
+  <div class="tablewrap">
+    <table id="tb">
+      <thead><tr>
+        <th class="l" data-k="ticker">TICKER</th>
+        <th class="l" data-k="nome">NOME</th>
+        <th class="l" data-k="setor">SETOR</th>
+        <th data-k="preco">PREÇO US$</th>
+        <th data-k="dy">DY BRUTO</th>
+        <th data-k="dy_liq" title="DY × 0,70 — após 30% de retenção do IRS (sem tratado Brasil–EUA). Informativo: não entra no veredito.">DY LÍQ.*</th>
+        <th data-k="spread">SPREAD pp</th>
+        <th data-k="chg52w">Δ52s</th>
+        <th data-k="payout_ffo" title="dividendos ÷ (lucro líquido + D&amp;A) — proxy de FFO">PAYOUT FFO</th>
+        <th data-k="div_pl" title="dívida/EBITDA quando disponível; senão dívida/PL (free tier da Finnhub não fornece dív/EBITDA)">ALAVANC.</th>
+        <th class="l" data-k="armadilhas">ARMADILHAS</th>
+        <th data-k="veredito">VEREDITO</th>
+        <th data-k="qtd">QTD</th>
+        <th data-k="valor_usd">VALOR US$</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="note">* DY líquido = bruto × 0,70 (retenção de 30% do IRS sobre dividendos para não-residentes; Brasil e EUA não têm tratado de bitributação). O veredito usa o spread <em>bruto</em>. Sem mREITs na lista — o modelo de spread não se aplica a REITs hipotecários.</p>
+</div>
+<script>
+let D=null, fV=null, fS=null, fCart=false, sortK='spread', sortAsc=false;
+const $=id=>document.getElementById(id);
+const fmt=(v,d=2)=>v==null?'<span class="dim">s/d</span>':v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=v=>v==null?'<span class="dim">s/d</span>':(v>0?'+':'')+v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'%';
+
+fetch('reits.json?'+Date.now()).then(r=>r.json()).then(d=>{D=d;init();}).catch(()=>{
+  $('gen').textContent='falha ao carregar reits.json';});
+
+function init(){
+  const idadeH=(Date.now()-new Date(D.gerado_em))/36e5;
+  let gen='dados de '+new Date(D.gerado_em).toLocaleString('pt-BR');
+  if(idadeH>48) gen+=' ⚠ desatualizado';
+  $('gen').textContent=gen;
+  if((D.saude?.alertas||[]).length){
+    $('aviso').style.display='block';
+    $('aviso').textContent='⚠ '+D.saude.alertas.join(' · ');
+  }
+  const p=D.premissas;
+  $('fita').innerHTML=
+    `<span><span class="lbl">UST 10A</span> <b>${fmt(D.ust10y)}%</b> <span class="dim">(${D.ust10y_fonte})</span></span>`+
+    `<span><span class="lbl">COMPRA ≥</span> <b>+${fmt(p.spread_compra,1)}pp</b></span>`+
+    `<span><span class="lbl">OBSERVAR ≥</span> <b style="color:var(--obs)">+${fmt(p.spread_observar,1)}pp</b></span>`+
+    `<span><span class="lbl">retenção EUA</span> <b style="color:var(--obs)">${p.withholding*100}%</b></span>`+
+    `<span><span class="lbl">universo</span> <b>${D.saude.validos}/${D.saude.total}</b></span>`;
+  render();
+}
+
+function render(){
+  let rs=D.reits.slice();
+  // KPI chips por veredito
+  const cnt={};rs.forEach(r=>cnt[r.veredito]=(cnt[r.veredito]||0)+1);
+  const nCart=rs.filter(r=>r.qtd>0).length;
+  $('vchips').innerHTML=['COMPRA','OBSERVAR','CARO','CUIDADO'].map(v=>
+    `<span class="chip v-${v} ${fV===v?'on':''}" onclick="tgV('${v}')">${v}<b>${cnt[v]||0}</b></span>`).join('')+
+    `<span class="chip ${fCart?'on':''}" onclick="tgC()">💼 carteira<b>${nCart}</b></span>`;
+  // chips de setor
+  const sets=[...new Set(D.reits.map(r=>r.setor))];
+  $('schips').innerHTML=sets.map(s=>
+    `<span class="chip ${fS===s?'on':''}" onclick="tgS('${s}')">${s}<b>${D.reits.filter(r=>r.setor===s).length}</b></span>`).join('');
+  // filtros
+  if(fV) rs=rs.filter(r=>r.veredito===fV);
+  if(fS) rs=rs.filter(r=>r.setor===fS);
+  if(fCart) rs=rs.filter(r=>r.qtd>0);
+  // ordenação
+  rs.sort((a,b)=>{
+    let x=a[sortK],y=b[sortK];
+    if(Array.isArray(x)){x=x.length;y=y.length;}
+    if(x==null)return 1; if(y==null)return -1;
+    if(typeof x==='string')return sortAsc?x.localeCompare(y):y.localeCompare(x);
+    return sortAsc?x-y:y-x;
+  });
+  $('rows').innerHTML=rs.map(r=>{
+    const vc=r.veredito==='s/d'?'v-sd':'v-'+r.veredito;
+    return `<tr class="${r.qtd>0?'own':''}">
+      <td class="l"><b>${r.ticker}</b></td>
+      <td class="l dim">${r.nome}</td>
+      <td class="l setor">${r.setor}</td>
+      <td>${fmt(r.preco)}</td>
+      <td>${r.dy==null?'<span class="dim">s/d</span>':fmt(r.dy)+'%'}</td>
+      <td class="liq">${r.dy_liq==null?'<span class="dim">s/d</span>':fmt(r.dy_liq)+'%'}</td>
+      <td class="${r.spread>0?'pos':'neg'}"><b>${r.spread==null?'s/d':(r.spread>0?'+':'')+fmt(r.spread)}</b></td>
+      <td class="${(r.chg52w||0)>=0?'pos':'neg'}">${pct(r.chg52w)}</td>
+      <td>${r.payout_ffo==null?'<span class="dim">s/d</span>':fmt(r.payout_ffo*100,0)+'%'}</td>
+      <td>${r.div_ebitda!=null?fmt(r.div_ebitda,1)+'x <span class="dim">EBITDA</span>':(r.div_pl!=null?fmt(r.div_pl,2)+'x <span class="dim">PL</span>':'<span class="dim">s/d</span>')}</td>
+      <td class="l arm">${(r.armadilhas||[]).join(' · ')||'<span class="dim">—</span>'}</td>
+      <td><span class="v ${vc}">${r.veredito}</span></td>
+      <td>${r.qtd||'<span class="dim">—</span>'}</td>
+      <td>${r.valor_usd?fmt(r.valor_usd):'<span class="dim">—</span>'}</td>
+    </tr>`;}).join('');
+}
+function tgV(v){fV=fV===v?null:v;render();}
+function tgS(s){fS=fS===s?null:s;render();}
+function tgC(){fCart=!fCart;render();}
+document.querySelectorAll('th').forEach(th=>th.onclick=()=>{
+  const k=th.dataset.k;if(!k)return;
+  if(sortK===k)sortAsc=!sortAsc;else{sortK=k;sortAsc=(k==='ticker'||k==='nome'||k==='setor');}
+  render();
+});
+</script>
+</body>
+</html>

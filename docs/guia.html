@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitor · Guia</title>
+<style>
+:root{
+  --bg:#0b0f14; --panel:#10161e; --panel2:#0d1219; --bd:#1d2733;
+  --tx:#c8d4e0; --dim:#5d6f82; --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+  --ok:#3ddc84; --obs:#e8c547; --cui:#ff7849; --link:#4fb3ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--mono);font-size:13px;
+  padding:18px 16px 80px;line-height:1.65}
+.wrap{max-width:880px;margin:0 auto}
+header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+h1{font-size:16px;font-weight:700;letter-spacing:.06em}
+header a{color:var(--link);text-decoration:none;font-size:12px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+nav a{background:var(--panel);border:1px solid var(--bd);border-radius:18px;
+  padding:5px 12px;font-size:12px;color:var(--dim);text-decoration:none}
+nav a:hover{color:var(--tx);border-color:var(--ok)}
+section{background:var(--panel);border:1px solid var(--bd);border-radius:12px;
+  padding:16px 18px;margin-bottom:14px}
+h2{font-size:13px;color:var(--ok);letter-spacing:.08em;margin-bottom:10px}
+h2 .n{color:var(--dim);margin-right:8px}
+p{margin:8px 0;color:var(--tx)}
+ol,ul{margin:8px 0 8px 22px}
+li{margin:5px 0}
+code{background:var(--panel2);border:1px solid var(--bd);border-radius:5px;
+  padding:1px 6px;font-size:12px;color:var(--obs)}
+pre{background:var(--panel2);border:1px solid var(--bd);border-radius:8px;
+  padding:10px 12px;overflow-x:auto;margin:8px 0}
+pre code{background:none;border:none;padding:0;color:var(--tx)}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:12px}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--bd)}
+th{color:var(--dim);font-weight:600}
+.dim{color:var(--dim)} .ok{color:var(--ok)} .obs{color:var(--obs)} .cui{color:var(--cui)}
+.tag{font-weight:700;padding:1px 7px;border-radius:6px;font-size:11px}
+.t-c{color:var(--ok);background:#0e2418}.t-o{color:var(--obs);background:#272008}
+.t-x{color:#8896a6;background:#161d26}.t-u{color:var(--cui);background:#2a150c}
+@media(max-width:640px){body{padding:12px 8px 50px}section{padding:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>GUIA <span class="dim">· setup &amp; uso · v2 (Fase 4)</span></h1>
+  <span style="margin-left:auto"><a href="index.html">← monitor</a> &nbsp;·&nbsp; <a href="reits.html">US REITs ↗</a></span>
+</header>
+<nav>
+  <a href="#setup">1 Setup</a><a href="#agenda">2 Agenda</a><a href="#rotina">3 Rotina</a>
+  <a href="#vereditos">4 Vereditos</a><a href="#problemas">5 Problemas</a><a href="#paginas">6 Páginas</a>
+</nav>
+
+<section id="setup">
+<h2><span class="n">1</span>SETUP INICIAL <span class="dim">(uma vez só, ~10 min)</span></h2>
+<ol>
+<li><b>Chave Finnhub (grátis):</b> <span class="dim">finnhub.io → Sign up → copie a API Key.</span></li>
+<li><b>Repositório:</b> github.com/new → ex. <code>monitor-investimentos</code> → Private. Suba TODO o conteúdo, inclusive <code>.github/</code> <span class="dim">(se o upload web ignorar pastas ocultas, use GitHub Desktop ou git push)</span>.</li>
+<li><b>Segredo:</b> Settings ▸ Secrets and variables ▸ Actions ▸ New repository secret → <code>FINNHUB_KEY</code>.</li>
+<li><b>Permissão do bot:</b> Settings ▸ Actions ▸ General ▸ Workflow permissions ▸ <b>Read and write</b>.</li>
+<li><b>Site:</b> Settings ▸ Pages ▸ Deploy from a branch ▸ <code>main</code> /docs. Adicione a URL à tela inicial do iPhone.</li>
+<li><b>Primeira execução:</b> Actions ▸ rode os dois workflows manualmente (<i>Atualizar dados do monitor</i> e <i>Atualizar US REITs</i>).</li>
+</ol>
+</section>
+
+<section id="agenda">
+<h2><span class="n">2</span>AGENDA AUTOMÁTICA <span class="dim">(e por que o horário é “torto”)</span></h2>
+<table>
+<tr><th>Workflow</th><th>Cron (UTC)</th><th>BRT</th><th>Repescagem</th></tr>
+<tr><td>Atualizar dados do monitor</td><td><code>23 9 * * 1-5</code></td><td>06:23</td><td>07:23</td></tr>
+<tr><td>Atualizar US REITs</td><td><code>23 9 * * 1-5</code></td><td>06:23</td><td>07:23</td></tr>
+</table>
+<p class="dim">Crons do GitHub são <i>best-effort</i>: horários cheios (:00/:30) atrasam 15–60 min ou são derrubados. Por isso minuto 23 + uma segunda entrada de repescagem — os pipelines são idempotentes: se a 1ª rodou, a 2ª não comita nada.</p>
+</section>
+
+<section id="rotina">
+<h2><span class="n">3</span>ROTINA <span class="dim">(rara — tudo se edita no próprio GitHub: lápis ▸ commit)</span></h2>
+<ul>
+<li><b>Posições:</b> <code>data/holdings.json</code> — um arquivo só para tudo:
+<pre><code>{"PETR4": 100, "MXRF11": 500, "AAPL": 10, "O": 25}</code></pre></li>
+<li><b>Watchlist US Stocks:</b> <code>WATCHLIST</code> em <code>pipeline/fetch_us.py</code></li>
+<li><b>Watchlist US REITs:</b> <code>WATCHLIST</code> em <code>pipeline/fetch_reits.py</code> <span class="dim">(ticker → nome, setor; sem mREITs — o modelo de spread não se aplica)</span></li>
+<li><b>Premissas BR/US:</b> <code>PREMISSAS</code> em <code>pipeline/analyze.py</code></li>
+<li><b>Premissas REITs:</b> <code>PREMISSAS_REITS</code> em <code>pipeline/analyze_reits.py</code></li>
+<li><b>NTN-B real:</b> <code>ntnb_manual</code> em <code>fetch_us.py ▸ fetch_macro</code></li>
+</ul>
+</section>
+
+<section id="vereditos">
+<h2><span class="n">4</span>COMO LER OS VEREDITOS</h2>
+<table>
+<tr><th>Aba</th><th>Modelo</th></tr>
+<tr><td><b>Ações BR</b></td><td>composto Bazin + Graham + Gordon (MÉD 3) com gate de qualidade</td></tr>
+<tr><td><b>FIIs</b></td><td>spread do DY sobre a NTN-B + detecção de armadilha</td></tr>
+<tr><td><b>US Stocks</b></td><td>composto 4 fatores: PEG · EV/EBITDA · ROE vs custo de capital · P/L</td></tr>
+<tr><td><b>US REITs</b></td><td>spread = DY bruto − UST10Y + 3 armadilhas (abaixo)</td></tr>
+</table>
+<p><b>US REITs em detalhe:</b>
+<span class="tag t-c">COMPRA</span> spread ≥ +1,5pp ·
+<span class="tag t-o">OBSERVAR</span> ≥ +0,5pp ·
+<span class="tag t-x">CARO</span> abaixo disso ·
+<span class="tag t-u">CUIDADO</span> qualquer armadilha.</p>
+<ul>
+<li><b class="cui">DY via queda:</b> DY ≥ 7% <i>e</i> preço −25% ou pior em 52 semanas</li>
+<li><b class="cui">Payout FFO alto:</b> dividendos ÷ (lucro líquido + D&amp;A) &gt; 90%</li>
+<li><b class="cui">Alavancagem alta:</b> dívida/EBITDA &gt; 7x</li>
+</ul>
+<p>A coluna <b class="obs">DY líq.</b> = bruto × 0,70 (retenção de 30% do IRS para não-residentes; Brasil e EUA não têm tratado de bitributação). É <b>informativa</b>: o veredito usa o spread bruto.</p>
+<p class="dim">Por que aba própria? P/L e PEG não valem para REITs — a depreciação dos imóveis esmaga o lucro GAAP enquanto os ativos muitas vezes se valorizam. O composto de 4 fatores marcaria “CARO” em nomes de qualidade por puro artefato contábil.</p>
+</section>
+
+<section id="problemas">
+<h2><span class="n">5</span>QUANDO ALGO DER ERRADO</h2>
+<ol>
+<li><b>⚠ desatualizado no topo:</b> dados com mais de 48h → Actions ▸ veja a última execução.</li>
+<li><b>Nenhuma execução no horário:</b> cron drift do GitHub (§2) — a repescagem deve cobrir; se nem ela rodou, <i>Run workflow</i> manual.</li>
+<li><b>Execução vermelha:</b> abra o log. Se for o <b>gate de saúde</b> (“universo encolheu” / “&lt;40/50 REITs válidos”), os dados anteriores foram preservados de propósito — o problema é a fonte (Fundamentus/Finnhub), não o pipeline. O alerta também aparece no topo do dashboard.</li>
+<li><b>Campos s/d nos REITs:</b> rode o diagnóstico ao vivo:
+<pre><code>FINNHUB_KEY=xxx python3 pipeline/fetch_reits.py --diagnose O PLD</code></pre></li>
+<li><b>Teste local sem rede:</b>
+<pre><code>python pipeline/run.py --fixtures fixtures/
+python pipeline/run_reits.py --fixtures fixtures/</code></pre>
+e sirva a pasta <code>docs/</code>.</li>
+</ol>
+</section>
+
+<section id="paginas">
+<h2><span class="n">6</span>PÁGINAS DO SITE</h2>
+<ul>
+<li><a href="index.html" style="color:var(--link)">index.html</a> — Ações · FIIs · US Stocks · Carteira/Simulador</li>
+<li><a href="reits.html" style="color:var(--link)">reits.html</a> — US REITs (spread vs UST10Y)</li>
+<li><b>guia.html</b> — este guia</li>
+</ul>
+</section>
+
+<p class="dim" style="text-align:center;margin-top:8px">Monitor · pipeline GitHub Actions + GitHub Pages · guia v2</p>
+</div>
+</body>
+</html>
