@@ -1,0 +1,46 @@
+name: Atualizar US REITs
+
+on:
+  schedule:
+    # Minuto "torto" de propósito: crons em :00/:30 são os mais atrasados/derrubados
+    # pelo GitHub. 09:23 UTC = 06:23 BRT. A segunda entrada é a tentativa de cura:
+    # o pipeline é idempotente — se a 1ª rodou, a 2ª não muda nada e não comita.
+    - cron: '23 9 * * 1-5'
+    - cron: '23 10 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Testes do motor (calibração)
+        run: python pipeline/test_reits.py
+
+      - name: Rodar pipeline de REITs
+        env:
+          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
+          # REITS_FFO: '0'   # descomente para pular o proxy de FFO (~1 min a menos)
+        run: python pipeline/run_reits.py
+
+      - name: Commit se houver mudança
+        run: |
+          git config user.name "monitor-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/reits.json
+          if git diff --cached --quiet; then
+            echo "Sem mudanças — nada a comitar."
+          else
+            git commit -m "reits: atualização $(date -u +'%Y-%m-%d %H:%M UTC')"
+            # rebase antes do push: evita corrida com o workflow principal
+            git pull --rebase origin main
+            git push
+          fi
