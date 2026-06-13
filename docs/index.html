@@ -37,9 +37,8 @@ h1 .dot{color:var(--tkr)}
   font:600 13px "JetBrains Mono",monospace;padding:9px 16px;border-radius:10px;cursor:pointer}
 .tabs button.on{background:var(--blue);border-color:var(--blue);color:#08101e}
 .tabs a.ext{background:var(--panel);border:1px solid var(--border);color:var(--blue);
-  text-decoration:none;border-radius:8px;padding:7px 14px;font-size:12px;
-  font-family:inherit;letter-spacing:.04em;margin-left:auto}
-.tabs a.ext+a.ext{margin-left:0}
+  text-decoration:none;border-radius:10px;padding:9px 14px;font:600 12px "JetBrains Mono",monospace;
+  letter-spacing:.04em;margin-left:auto}
 
 /* kpis */
 .kpis{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
@@ -110,8 +109,8 @@ tr.owned td:first-child{box-shadow:inset 3px 0 0 var(--g)}
   <button id="t-acoes" class="on" onclick="setMkt('acoes')">AÇÕES</button>
   <button id="t-fiis" onclick="setMkt('fiis')">FIIs</button>
   <button id="t-us" onclick="setMkt('us')">US STOCKS</button>
+  <button id="t-reits" onclick="setMkt('reits')">US REITs</button>
   <button id="t-carteira" onclick="setMkt('carteira')">💼 CARTEIRA</button>
-  <a class="ext" href="reits.html">US REITs ↗</a>
   <a class="ext" href="guia.html">GUIA ↗</a>
 </div>
 
@@ -131,7 +130,7 @@ tr.owned td:first-child{box-shadow:inset 3px 0 0 var(--g)}
 
 <script>
 let DATA=null, HIST=[], MKT='acoes', SECTOR='__all', KPIF=null, SORT=null;
-let FX=5.40, SIM={}, HOLD={};
+let FX=5.40, SIM={}, HOLD={}, REITS_META=null;
 
 const fmt={
   brl:n=>'R$'+(n??0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}),
@@ -143,13 +142,26 @@ const fmt={
 const cls=v=>v==null?'':(v>0?'pos':v<0?'neg':'');
 
 async function boot(){
-  const [d,h]=await Promise.all([
+  const [d,h,rj]=await Promise.all([
     fetch('data.json').then(r=>r.json()),
     fetch('history.json').then(r=>r.json()).catch(()=>[]),
+    fetch('reits.json').then(r=>r.json()).catch(()=>null),
   ]);
   DATA=d; HIST=h;
+  // REITs: reits.json usa pontos percentuais; o app usa frações → /100
+  if(rj&&rj.reits){
+    REITS_META={ust10y:rj.ust10y,fonte:rj.ust10y_fonte,gerado_em:rj.gerado_em};
+    DATA.reits=rj.reits.map(r=>({
+      ticker:r.ticker, nome:r.nome, setor:r.setor, preco:r.preco,
+      dy:r.dy==null?null:r.dy/100, dy_liq:r.dy_liq==null?null:r.dy_liq/100,
+      spread:r.spread==null?null:r.spread/100, chg52w:r.chg52w==null?null:r.chg52w/100,
+      payout_ffo:r.payout_ffo, div_pl:r.div_ebitda!=null?r.div_ebitda:r.div_pl,
+      alav_unid:r.div_ebitda!=null?'EBITDA':'PL',
+      armadilhas:r.armadilhas||[], veredito:r.veredito, qtd:0,
+    }));
+  } else { DATA.reits=[]; document.getElementById('t-reits').style.opacity=.45; }
   HOLD=JSON.parse(localStorage.getItem('holdings')||'{}');
-  for(const k of ['acoes','fiis','us'])
+  for(const k of ['acoes','fiis','us','reits'])
     (DATA[k]||[]).forEach(r=>{ r.qtd=HOLD[r.ticker]||0; });
   if(d.macro&&d.macro.usdbrl) FX=d.macro.usdbrl;
   const idadeH=(Date.now()-new Date(d.gerado_em))/36e5;
@@ -172,6 +184,7 @@ function fita(){
     ['NTN-B real',fmt.pct(m.ntnb_real)],['USD/BRL',fmt.num(m.usdbrl)],
     ['Piso Bazin BR',fmt.pct(DATA.premissas.bazin_floor_br)],
   ];
+  if(REITS_META&&REITS_META.ust10y!=null) itens.push(['UST 10A',fmt.num(REITS_META.ust10y)+'%']);
   document.getElementById('fita').innerHTML=itens.map(([l,v])=>`<div><b>${l}</b><span>${v}</span></div>`).join('');
 }
 
@@ -179,21 +192,22 @@ function rows(){ return DATA[MKT]||[]; }
 
 function setMkt(m){
   MKT=m; SECTOR='__all'; KPIF=null; SORT=null;
-  for(const t of ['acoes','fiis','us','carteira'])
+  for(const t of ['acoes','fiis','us','reits','carteira'])
     document.getElementById('t-'+t).className=(t===m)?'on':'';
   document.getElementById('screener').style.display=(m==='carteira')?'none':'';
   document.getElementById('carteira').style.display=(m==='carteira')?'':'none';
   if(m==='carteira'){ renderCarteira(); return; }
   const vs=document.getElementById('verdict');
   const opts=m==='acoes'?['COMPRA FORTE','COMPRA','NEUTRO','CARO']
-            :m==='us'?['ATRAENTE','RAZOÁVEL','CARO','MUITO CARO']:[];
+            :m==='us'?['ATRAENTE','RAZOÁVEL','CARO','MUITO CARO']
+            :m==='reits'?['COMPRA','OBSERVAR','CARO','CUIDADO']:[];
   vs.style.display=opts.length?'':'none';
   vs.innerHTML='<option value="__all">todos os vereditos</option>'+opts.map(o=>`<option>${o}</option>`).join('');
   buildChips(); render();
 }
 
 function buildChips(){
-  const key=MKT==='us'?'setor':'bloco';
+  const key=(MKT==='us'||MKT==='reits')?'setor':'bloco';
   const sec={};
   rows().forEach(r=>{ if(r[key]) sec[r[key]]=(sec[r[key]]||0)+1; });
   let h=`<div class="chip ${SECTOR==='__all'?'on':''}" data-s="__all">Todos (${rows().length})</div>`;
@@ -208,7 +222,7 @@ function buildChips(){
 function filtered(){
   const q=document.getElementById('search').value.trim().toUpperCase();
   const vf=document.getElementById('verdict').value;
-  const key=MKT==='us'?'setor':'bloco';
+  const key=(MKT==='us'||MKT==='reits')?'setor':'bloco';
   return rows().filter(r=>{
     if(SECTOR!=='__all'&&r[key]!==SECTOR) return false;
     if(q&&!(r.ticker||'').includes(q)) return false;
@@ -220,6 +234,7 @@ function filtered(){
     if(KPIF==='pvp1'&&!(r.pvp>0&&r.pvp<1)) return false;
     if(KPIF==='trap'&&!r.trap) return false;
     if(KPIF==='at'&&r.veredito!=='ATRAENTE') return false;
+    if(KPIF==='cui'&&r.veredito!=='CUIDADO') return false;
     if(KPIF==='owned'&&!(r.qtd>0)) return false;
     return true;
   });
@@ -245,6 +260,11 @@ function renderKpis(){
      +kpi(all.filter(r=>r.pvp>0&&r.pvp<1).length,'P/VP < 1','a','pvp1')
      +kpi(all.filter(r=>r.trap).length,'armadilhas','r','trap')
      +kpi(owned,'carteira','g','owned');
+  }else if(MKT==='reits'){
+    h=kpi(all.length,'US REITs','')
+     +kpi(all.filter(r=>r.veredito==='COMPRA').length,'compra','g','c')
+     +kpi(all.filter(r=>r.veredito==='CUIDADO').length,'cuidado','r','cui')
+     +kpi(owned,'carteira','g','owned');
   }else{
     h=kpi(all.length,'US stocks','')
      +kpi(all.filter(r=>r.veredito==='ATRAENTE').length,'atraente','g','at')
@@ -265,17 +285,20 @@ const COLS={
     ['vacancia','VACÂNCIA'],['liquidez','LIQ.DIÁRIA'],['veredito','']],
   us:[['ticker','TICKER'],['preco','PREÇO US$'],['composto','COMPOSTO'],['peg','PEG'],
     ['ev_ebitda','EV/EBITDA'],['roe','ROE'],['pe','P/L'],['dy','DY'],['veredito','VEREDITO']],
+  reits:[['ticker','TICKER'],['preco','PREÇO US$'],['dy','DY BRUTO'],['dy_liq','DY LÍQ.'],
+    ['spread','SPREAD'],['chg52w','Δ52s'],['div_pl','ALAVANC.'],['veredito','VEREDITO']],
 };
 
 function badge(v,trap){
   if(MKT==='fiis') return trap?'<span class="badge b-trap">TRAP?</span>':'';
   if(v==null) return '<span class="nm">—</span>';
   const map={'COMPRA FORTE':'b-cf','COMPRA':'b-c','NEUTRO':'b-n','CARO':'b-x',
-    'ATRAENTE':'b-cf','RAZOÁVEL':'b-n','MUITO CARO':'b-mc'};
+    'ATRAENTE':'b-cf','RAZOÁVEL':'b-n','MUITO CARO':'b-mc','OBSERVAR':'b-n','CUIDADO':'b-mc'};
   return `<span class="badge ${map[v]||'b-n'}">${v}</span>`;
 }
 
 function spark(t){
+  if(MKT==='reits') return '';
   // mini-tendência do med3/composto/spread a partir do histórico
   const key=MKT==='acoes'?'acoes':MKT==='fiis'?'fiis':'us';
   const field=MKT==='acoes'?'m':MKT==='fiis'?'s':'c';
@@ -318,6 +341,15 @@ function render(){
       <td>${fmt.brl(r.preco)}</td><td>${fmt.pct(r.dy)}</td><td>${fmt.num(r.pvp)}</td>
       <td class="${cls(r.spread)}">${fmt.pct(r.spread)}</td>
       <td>${fmt.pct(r.vacancia)}</td><td>${fmt.m(r.liquidez)}</td><td>${badge(null,r.trap)}</td></tr>`;
+    }else if(MKT==='reits'){
+      const arm=(r.armadilhas||[]).length?`<div class="nm" style="color:var(--r)">⚠ ${r.armadilhas.join(' · ')}</div>`:'';
+      h+=`<tr${o}><td><span class="tkr">${r.ticker}</span><div class="nm">${r.nome||''}</div>${arm}</td>
+      <td>$${fmt.num(r.preco)}</td><td>${fmt.pct(r.dy)}</td>
+      <td style="color:var(--a)">${fmt.pct(r.dy_liq)}</td>
+      <td class="${cls(r.spread)}"><b>${r.spread==null?'—':(r.spread>0?'+':'')+(r.spread*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'pp'}</b></td>
+      <td class="${cls(r.chg52w)}">${fmt.pct(r.chg52w)}</td>
+      <td>${r.div_pl==null?'—':fmt.num(r.div_pl)+'x <span class="nm">'+r.alav_unid+'</span>'}</td>
+      <td>${badge(r.veredito)}</td></tr>`;
     }else{
       h+=`<tr${o}><td><span class="tkr">${r.ticker}</span> ${spark(r.ticker)}<div class="nm">${r.nome||''}</div></td>
       <td>$${fmt.num(r.preco)}</td><td>${fmt.num(r.composto)}</td><td>${fmt.num(r.peg)}</td>
@@ -334,6 +366,7 @@ function holdings(){
   (DATA.acoes||[]).forEach(r=>{ if(r.qtd>0) out.push({t:r.ticker,m:'Ação',px:r.preco,qtd:r.qtd,fx:1,v:r.veredito}); });
   (DATA.fiis||[]).forEach(r=>{ if(r.qtd>0) out.push({t:r.ticker,m:'FII',px:r.preco,qtd:r.qtd,fx:1,v:r.trap?'TRAP?':null}); });
   (DATA.us||[]).forEach(r=>{ if(r.qtd>0) out.push({t:r.ticker,m:'US',px:r.preco,qtd:r.qtd,fx:FX,v:r.veredito}); });
+  (DATA.reits||[]).forEach(r=>{ if(r.qtd>0) out.push({t:r.ticker,m:'REIT',px:r.preco,qtd:r.qtd,fx:FX,v:r.veredito}); });
   return out;
 }
 
@@ -387,13 +420,13 @@ function renderCarteira(){
   </div>`;
 }
 function saveHold(){ localStorage.setItem('holdings',JSON.stringify(HOLD));
-  for(const k of ['acoes','fiis','us'])
+  for(const k of ['acoes','fiis','us','reits'])
     (DATA[k]||[]).forEach(r=>{ r.qtd=HOLD[r.ticker]||0; }); }
 function addPos(){
   const t=document.getElementById('addT').value.trim().toUpperCase();
   const q=parseFloat(document.getElementById('addQ').value);
   if(!t||isNaN(q)||q<=0) return;
-  const all=[...(DATA.acoes||[]),...(DATA.fiis||[]),...(DATA.us||[])];
+  const all=[...(DATA.acoes||[]),...(DATA.fiis||[]),...(DATA.us||[]),...(DATA.reits||[])];
   if(!all.some(r=>r.ticker===t)){ alert(t+' não está no monitor (verifique o ticker / watchlist US).'); return; }
   HOLD[t]=q; saveHold(); renderCarteira();
 }

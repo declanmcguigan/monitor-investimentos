@@ -46,97 +46,94 @@ th{color:var(--dim);font-weight:600}
 <body>
 <div class="wrap">
 <header>
-  <h1>GUIA <span class="dim">· setup &amp; uso · v2 (Fase 4)</span></h1>
-  <span style="margin-left:auto"><a href="index.html">← monitor</a> &nbsp;·&nbsp; <a href="reits.html">US REITs ↗</a></span>
+  <h1>GUIA <span class="dim">· entendendo o monitor</span></h1>
+  <span style="margin-left:auto"><a href="index.html">← monitor</a></span>
 </header>
 <nav>
-  <a href="#setup">1 Setup</a><a href="#agenda">2 Agenda</a><a href="#rotina">3 Rotina</a>
-  <a href="#vereditos">4 Vereditos</a><a href="#problemas">5 Problemas</a><a href="#paginas">6 Páginas</a>
+  <a href="#ideia">1 A ideia</a><a href="#acoes">2 Ações: Bazin·Graham·Gordon</a>
+  <a href="#glossario">3 Glossário das colunas</a><a href="#fiis">4 FIIs</a>
+  <a href="#us">5 US Stocks</a><a href="#reits">6 US REITs</a>
+  <a href="#fontes">7 De onde vêm os dados</a><a href="#problemas">8 Quando algo falha</a>
 </nav>
 
-<section id="setup">
-<h2><span class="n">1</span>SETUP INICIAL <span class="dim">(uma vez só, ~10 min)</span></h2>
-<ol>
-<li><b>Chave Finnhub (grátis):</b> <span class="dim">finnhub.io → Sign up → copie a API Key.</span></li>
-<li><b>Repositório:</b> github.com/new → ex. <code>monitor-investimentos</code> → Private. Suba TODO o conteúdo, inclusive <code>.github/</code> <span class="dim">(se o upload web ignorar pastas ocultas, use GitHub Desktop ou git push)</span>.</li>
-<li><b>Segredo:</b> Settings ▸ Secrets and variables ▸ Actions ▸ New repository secret → <code>FINNHUB_KEY</code>.</li>
-<li><b>Permissão do bot:</b> Settings ▸ Actions ▸ General ▸ Workflow permissions ▸ <b>Read and write</b>.</li>
-<li><b>Site:</b> Settings ▸ Pages ▸ Deploy from a branch ▸ <code>main</code> /docs. Adicione a URL à tela inicial do iPhone.</li>
-<li><b>Primeira execução:</b> Actions ▸ rode os dois workflows manualmente (<i>Atualizar dados do monitor</i> e <i>Atualizar US REITs</i>).</li>
-</ol>
+<section id="ideia">
+<h2><span class="n">1</span>A IDEIA EM UMA FRASE</h2>
+<p>Este monitor pega dados públicos de cada ativo (preço, dividendos, lucro, dívida…) todos os dias e aplica fórmulas clássicas de avaliação para responder uma pergunta só: <b>este ativo está caro ou barato perto do que ele realmente entrega?</b> O resultado vira um <b>veredito</b> colorido em cada linha. O veredito não é ordem de compra — é um filtro para você saber onde olhar com atenção.</p>
+<p class="dim">Importante: nenhuma fórmula prevê o futuro. Elas só comparam o preço de hoje com fundamentos de hoje. Um "COMPRA FORTE" pode cair; um "CARO" pode subir. A ferramenta organiza a sua atenção, não substitui o seu julgamento.</p>
 </section>
 
-<section id="agenda">
-<h2><span class="n">2</span>AGENDA AUTOMÁTICA <span class="dim">(e por que o horário é “torto”)</span></h2>
+<section id="acoes">
+<h2><span class="n">2</span>AÇÕES BR — POR QUE BAZIN, GRAHAM E GORDON JUNTOS</h2>
+<p>Para ações brasileiras o monitor usa <b>três métodos independentes</b> de calcular o "preço justo" de uma ação e depois tira a <b>média dos três</b> (a coluna <b>MÉD 3</b>). A lógica de usar três e não um: cada método enxerga a empresa por um ângulo diferente e tem um ponto cego diferente. Quando os três concordam que algo está barato, a leitura é muito mais confiável do que qualquer um deles sozinho.</p>
+
+<p><b class="obs">1. Bazin — o método do dividendo.</b> Décio Bazin parte de uma ideia simples: uma ação vale a pena quando o <b>dividendo que ela paga</b> rende mais que uma taxa mínima aceitável. Se você exige, digamos, 8% ao ano de retorno em dividendos (o "Piso Bazin" que aparece na fita do topo), então o preço justo é o dividendo anual dividido por 0,08. Acima desse preço a ação rende pouco dividendo; abaixo, rende bem. <span class="dim">Ponto forte: foca em dinheiro real no seu bolso. Ponto cego: ignora empresas boas que reinvestem em vez de distribuir.</span></p>
+
+<p><b class="obs">2. Graham — o método do valor patrimonial e lucro.</b> Benjamin Graham (o mentor de Warren Buffett) criou uma fórmula que combina o <b>lucro por ação</b> e o <b>valor patrimonial</b> da empresa para estimar um preço justo conservador. É a escola do "value investing": pague menos do que a empresa vale em ativos e lucros comprovados. <span class="dim">Ponto forte: muito difícil de enganar, exige fundamentos sólidos. Ponto cego: pode rejeitar empresas de crescimento que ainda têm pouco lucro contábil.</span></p>
+
+<p><b class="obs">3. Gordon — o método do crescimento dos dividendos.</b> O modelo de Gordon projeta os dividendos <b>crescendo a uma taxa constante</b> no futuro e traz esse fluxo a valor presente. Onde Bazin olha o dividendo de hoje parado, Gordon pergunta "e se este dividendo crescer X% ao ano para sempre?". <span class="dim">Ponto forte: premia empresas que aumentam dividendos de forma consistente. Ponto cego: muito sensível à taxa de crescimento que você assume — por isso às vezes aparece "n.m." (não-mensurável) quando a conta não fecha.</span></p>
+
+<p><b>Por que a média (MÉD 3)?</b> Cada coluna D.GRAHAM e D.GORDON mostra o <b>desconto</b> (ou ágio) do preço atual contra aquele preço justo: +20% significa "20% abaixo do justo por este método" — barato. A MÉD 3 junta os três descontos. O veredito final sai dessa média combinada com um <b>filtro de qualidade</b> (a empresa precisa ter fundamentos minimamente saudáveis para um desconto "contar"): <span class="tag t-c">COMPRA FORTE</span> os três concordam que está bem barato · <span class="tag t-c">COMPRA</span> barato · <span class="tag t-o">NEUTRO</span> perto do justo · <span class="tag t-x">CARO</span> acima do justo.</p>
+</section>
+
+<section id="glossario">
+<h2><span class="n">3</span>GLOSSÁRIO — O QUE CADA COLUNA SIGNIFICA</h2>
+<p>Os termos que aparecem nas tabelas, em português claro:</p>
 <table>
-<tr><th>Workflow</th><th>Cron (UTC)</th><th>BRT</th><th>Repescagem</th></tr>
-<tr><td>Atualizar dados do monitor</td><td><code>23 9 * * 1-5</code></td><td>06:23</td><td>07:23</td></tr>
-<tr><td>Atualizar US REITs</td><td><code>23 9 * * 1-5</code></td><td>06:23</td><td>07:23</td></tr>
+<tr><th>Coluna</th><th>O que é</th></tr>
+<tr><td><b>DY</b> <span class="dim">(Dividend Yield)</span></td><td>Quanto a empresa pagou de <b>dividendos no último ano dividido pelo preço da ação</b>. DY de 8% = para cada R$100 investidos, R$8 voltaram como dividendo. Quanto maior, mais renda — mas DY muito alto às vezes é sinal de que o preço caiu por um motivo ruim (ver "armadilha").</td></tr>
+<tr><td><b>ROE</b> <span class="dim">(Return on Equity)</span></td><td>Retorno sobre o patrimônio. Mede <b>quão eficiente a empresa é em gerar lucro com o dinheiro dos sócios</b>. ROE de 20% = a empresa transforma cada R$100 de patrimônio em R$20 de lucro por ano. É o principal termômetro de qualidade: empresas boas têm ROE alto e estável.</td></tr>
+<tr><td><b>P/L</b> <span class="dim">(Preço / Lucro)</span></td><td>Quantos anos de lucro atual você paga para comprar a empresa inteira. P/L 6 = você paga 6 anos de lucro. Baixo costuma ser barato, alto costuma ser caro — mas P/L muito baixo pode esconder um problema, e setores diferentes têm padrões diferentes.</td></tr>
+<tr><td><b>P/VP</b> <span class="dim">(Preço / Valor Patrimonial)</span></td><td>Preço da cota dividido pelo valor contábil dos ativos. Usado em FIIs. P/VP abaixo de 1 = você compra os imóveis por menos do que valem no papel. <span class="dim">(coluna na aba FIIs)</span></td></tr>
+<tr><td><b>PEG</b></td><td>É o P/L ajustado pelo crescimento. Um P/L alto pode ser justo se a empresa cresce rápido — o PEG mede isso. Perto de 1 = preço alinhado ao crescimento; acima de 2 = caro para o que entrega. <span class="dim">(aba US Stocks)</span></td></tr>
+<tr><td><b>EV/EBITDA</b></td><td>Valor total da empresa (incluindo dívida) dividido pela geração de caixa operacional. Forma de comparar empresas "limpa" de efeitos de dívida e impostos. Menor = mais barato. <span class="dim">(aba US Stocks)</span></td></tr>
+<tr><td><b>COMPOSTO</b></td><td>Nota de 0 a 100 que junta quatro fatores das ações americanas (PEG, EV/EBITDA, ROE vs custo de capital, e P/L). Maior = mais atraente. <span class="dim">(aba US Stocks)</span></td></tr>
+<tr><td><b>SPREAD</b></td><td>A "gordura" de retorno acima do investimento sem risco. Nos FIIs é o DY menos a NTN-B; nos REITs é o DY menos o título do governo americano. Quanto maior, mais o ativo paga acima do seguro. <span class="dim">(abas FIIs e REITs)</span></td></tr>
+<tr><td><b>VACÂNCIA</b></td><td>% dos imóveis de um FII que estão vazios (sem inquilino). Quanto menor, melhor. <span class="dim">(aba FIIs)</span></td></tr>
+<tr><td><b>Δ52s</b></td><td>Variação do preço nas últimas 52 semanas (um ano). <span class="dim">(aba REITs)</span></td></tr>
 </table>
-<p class="dim">Crons do GitHub são <i>best-effort</i>: horários cheios (:00/:30) atrasam 15–60 min ou são derrubados. Por isso minuto 23 + uma segunda entrada de repescagem — os pipelines são idempotentes: se a 1ª rodou, a 2ª não comita nada.</p>
+<p class="dim">Na fita do topo: <b>SELIC</b> é a taxa básica de juros do Brasil; <b>IPCA</b> é a inflação dos últimos 12 meses; <b>NTN-B real</b> é o juro acima da inflação que um título público paga (a referência "sem risco" dos FIIs); <b>USD/BRL</b> é o dólar; <b>UST 10A</b> é o juro do título de 10 anos dos EUA (a referência "sem risco" dos REITs).</p>
 </section>
 
-<section id="rotina">
-<h2><span class="n">3</span>ROTINA <span class="dim">(rara — tudo se edita no próprio GitHub: lápis ▸ commit)</span></h2>
-<ul>
-<li><b>Posições:</b> <code>data/holdings.json</code> — um arquivo só para tudo:
-<pre><code>{"PETR4": 100, "MXRF11": 500, "AAPL": 10, "O": 25}</code></pre></li>
-<li><b>Watchlist US Stocks:</b> <code>WATCHLIST</code> em <code>pipeline/fetch_us.py</code></li>
-<li><b>Watchlist US REITs:</b> <code>WATCHLIST</code> em <code>pipeline/fetch_reits.py</code> <span class="dim">(ticker → nome, setor; sem mREITs — o modelo de spread não se aplica)</span></li>
-<li><b>Premissas BR/US:</b> <code>PREMISSAS</code> em <code>pipeline/analyze.py</code></li>
-<li><b>Premissas REITs:</b> <code>PREMISSAS_REITS</code> em <code>pipeline/analyze_reits.py</code></li>
-<li><b>NTN-B real:</b> <code>ntnb_manual</code> em <code>fetch_us.py ▸ fetch_macro</code></li>
-</ul>
+<section id="fiis">
+<h2><span class="n">4</span>FIIs — SPREAD CONTRA O TESOURO</h2>
+<p>Fundos imobiliários são avaliados por uma pergunta direta: <b>o aluguel que eles distribuem paga o suficiente acima de um título público seguro para valer o risco de imóvel?</b> O monitor pega o DY do fundo e subtrai a NTN-B (o juro real do Tesouro) — isso é o <b>SPREAD</b>. Spread gordo = o fundo paga bem mais que o seguro. A coluna <b>P/VP</b> mostra se você está pagando caro ou barato pelos imóveis, e <b>VACÂNCIA</b> alerta para imóveis vazios.</p>
+<p>O selo <span class="tag t-u">TRAP?</span> aparece quando um DY altíssimo combina com sinais ruins (preço despencando, vacância alta) — ou seja, o rendimento alto pode ser uma <b>armadilha</b>: parece generoso porque o preço caiu por um problema real, não porque o fundo é bom.</p>
 </section>
 
-<section id="vereditos">
-<h2><span class="n">4</span>COMO LER OS VEREDITOS</h2>
-<table>
-<tr><th>Aba</th><th>Modelo</th></tr>
-<tr><td><b>Ações BR</b></td><td>composto Bazin + Graham + Gordon (MÉD 3) com gate de qualidade</td></tr>
-<tr><td><b>FIIs</b></td><td>spread do DY sobre a NTN-B + detecção de armadilha</td></tr>
-<tr><td><b>US Stocks</b></td><td>composto 4 fatores: PEG · EV/EBITDA · ROE vs custo de capital · P/L</td></tr>
-<tr><td><b>US REITs</b></td><td>spread = DY bruto − UST10Y + 3 armadilhas (abaixo)</td></tr>
-</table>
-<p><b>US REITs em detalhe:</b>
-<span class="tag t-c">COMPRA</span> spread ≥ +1,5pp ·
-<span class="tag t-o">OBSERVAR</span> ≥ +0,5pp ·
-<span class="tag t-x">CARO</span> abaixo disso ·
-<span class="tag t-u">CUIDADO</span> qualquer armadilha.</p>
+<section id="us">
+<h2><span class="n">5</span>US STOCKS — NOTA COMPOSTA DE QUATRO FATORES</h2>
+<p>Ações americanas não usam Bazin (cultura de dividendos é diferente lá). Em vez disso, o monitor dá uma <b>nota de 0 a 100</b> (coluna COMPOSTO) que combina quatro ângulos: <b>PEG</b> (preço vs crescimento), <b>EV/EBITDA</b> (preço vs caixa), <b>ROE contra o custo de capital</b> (a empresa cria ou destrói valor?) e <b>P/L</b>. Veredito: <span class="tag t-c">ATRAENTE</span> · <span class="tag t-o">RAZOÁVEL</span> · <span class="tag t-x">CARO</span> · <span class="tag t-u">MUITO CARO</span>.</p>
+</section>
+
+<section id="reits">
+<h2><span class="n">6</span>US REITs — O "FII AMERICANO"</h2>
+<p>REITs são empresas de imóveis listadas nos EUA — o primo americano dos FIIs. A lógica é a mesma dos FIIs, trocando a NTN-B pelo título de 10 anos do governo americano (UST 10A): <b>SPREAD = DY bruto − UST10Y</b>. <span class="tag t-c">COMPRA</span> spread ≥ +1,5pp · <span class="tag t-o">OBSERVAR</span> ≥ +0,5pp · <span class="tag t-x">CARO</span> abaixo · <span class="tag t-u">CUIDADO</span> qualquer armadilha.</p>
+<p>Três armadilhas rebaixam para CUIDADO: <b class="cui">DY via queda</b> (rendimento alto só porque o preço caiu ≥25%), <b class="cui">payout alto</b> (distribui mais do que sustenta) e <b class="cui">alavancagem alta</b> (dívida demais — coluna ALAVANC.).</p>
+<p>A coluna <b class="obs">DY LÍQ.</b> é o detalhe brasileiro importante: dividendos de REITs sofrem <b>30% de imposto retido nos EUA</b> (não há tratado Brasil–EUA), então o que de fato chega na sua conta é o DY bruto × 0,70. O veredito usa o bruto; a coluna líquida mostra a realidade pós-imposto. <span class="dim">P/L e PEG não aparecem aqui de propósito: a depreciação contábil dos imóveis distorce o lucro de REITs e enganaria essas métricas.</span></p>
+</section>
+
+<section id="fontes">
+<h2><span class="n">7</span>DE ONDE VÊM OS DADOS</h2>
+<p>Tudo é coletado automaticamente toda manhã, sem você fazer nada:</p>
 <ul>
-<li><b class="cui">DY via queda:</b> DY ≥ 7% <i>e</i> preço −25% ou pior em 52 semanas</li>
-<li><b class="cui">Payout FFO alto:</b> dividendos ÷ (lucro líquido + D&amp;A) &gt; 90%</li>
-<li><b class="cui">Alavancagem alta:</b> dívida/EBITDA &gt; 7x</li>
+<li><b>Ações e FIIs brasileiros:</b> dados públicos do Fundamentus e do Banco Central (SELIC, IPCA, NTN-B).</li>
+<li><b>US Stocks e REITs:</b> a API da Finnhub (preços e fundamentos) e o Tesouro americano (juro de 10 anos).</li>
+<li><b>Câmbio USD/BRL:</b> coletado junto, usado para converter posições na Carteira.</li>
 </ul>
-<p>A coluna <b class="obs">DY líq.</b> = bruto × 0,70 (retenção de 30% do IRS para não-residentes; Brasil e EUA não têm tratado de bitributação). É <b>informativa</b>: o veredito usa o spread bruto.</p>
-<p class="dim">Por que aba própria? P/L e PEG não valem para REITs — a depreciação dos imóveis esmaga o lucro GAAP enquanto os ativos muitas vezes se valorizam. O composto de 4 fatores marcaria “CARO” em nomes de qualidade por puro artefato contábil.</p>
+<p>A data e hora da última coleta aparecem no canto superior do monitor. Se passar de 48h sem atualizar, surge um aviso <b class="obs">⚠ desatualizado</b> — sinal de que a coleta automática falhou e os números podem estar velhos.</p>
+<p class="dim">A aba <b>Carteira</b> é só sua: as quantidades que você digita ficam salvas apenas neste aparelho (no navegador), nunca vão para a internet nem para o GitHub.</p>
 </section>
 
 <section id="problemas">
-<h2><span class="n">5</span>QUANDO ALGO DER ERRADO</h2>
+<h2><span class="n">8</span>QUANDO ALGO FALHA</h2>
 <ol>
-<li><b>⚠ desatualizado no topo:</b> dados com mais de 48h → Actions ▸ veja a última execução.</li>
-<li><b>Nenhuma execução no horário:</b> cron drift do GitHub (§2) — a repescagem deve cobrir; se nem ela rodou, <i>Run workflow</i> manual.</li>
-<li><b>Execução vermelha:</b> abra o log. Se for o <b>gate de saúde</b> (“universo encolheu” / “&lt;40/50 REITs válidos”), os dados anteriores foram preservados de propósito — o problema é a fonte (Fundamentus/Finnhub), não o pipeline. O alerta também aparece no topo do dashboard.</li>
-<li><b>Campos s/d nos REITs:</b> rode o diagnóstico ao vivo:
-<pre><code>FINNHUB_KEY=xxx python3 pipeline/fetch_reits.py --diagnose O PLD</code></pre></li>
-<li><b>Teste local sem rede:</b>
-<pre><code>python pipeline/run.py --fixtures fixtures/
-python pipeline/run_reits.py --fixtures fixtures/</code></pre>
-e sirva a pasta <code>docs/</code>.</li>
+<li><b>⚠ desatualizado no topo:</b> a coleta da manhã não rodou. Geralmente se resolve sozinha no dia seguinte; se persistir, há como rodar manualmente (ver o passo a passo técnico abaixo).</li>
+<li><b>Uma aba US (Stocks ou REITs) vazia ou com muitos "—":</b> a Finnhub pode ter ficado fora do ar na coleta. Os dados do dia anterior são preservados de propósito nesses casos.</li>
+<li><b>Números que parecem absurdos:</b> lembre que cada métrica tem pontos cegos (ver seções 2 a 6). Um valor estranho isolado quase sempre é particularidade contábil de uma empresa, não erro do monitor.</li>
 </ol>
 </section>
 
-<section id="paginas">
-<h2><span class="n">6</span>PÁGINAS DO SITE</h2>
-<ul>
-<li><a href="index.html" style="color:var(--link)">index.html</a> — Ações · FIIs · US Stocks · Carteira/Simulador</li>
-<li><a href="reits.html" style="color:var(--link)">reits.html</a> — US REITs (spread vs UST10Y)</li>
-<li><b>guia.html</b> — este guia</li>
-</ul>
-</section>
-
-<p class="dim" style="text-align:center;margin-top:8px">Monitor · pipeline GitHub Actions + GitHub Pages · guia v2</p>
+<p class="dim" style="text-align:center;margin-top:8px">Monitor · guia de leitura · os vereditos são filtros de atenção, não recomendações de investimento</p>
 </div>
 </body>
 </html>
