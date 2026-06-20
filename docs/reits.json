@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-06-19T13:53:57.509607+00:00",
+ "gerado_em": "2026-06-20T16:22:11.109091+00:00",
  "ust10y": 4.46,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 50,
+  "validos": 48,
   "total": 50,
   "alertas": []
  },
@@ -271,6 +271,25 @@
    "valor_usd": 0
   },
   {
+   "ticker": "UDR",
+   "nome": "UDR",
+   "setor": "Residencial",
+   "preco": 37.57,
+   "dy": 4.63258785942492,
+   "chg52w": -8.6576,
+   "payout_gaap": 116.79,
+   "div_ebitda": null,
+   "div_pl": 1.7702,
+   "payout_ffo": null,
+   "ust10y": 4.46,
+   "dy_liq": 3.24,
+   "spread": 0.17,
+   "armadilhas": [],
+   "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
    "ticker": "MAA",
    "nome": "Mid-America Apt.",
    "setor": "Residencial",
@@ -284,25 +303,6 @@
    "ust10y": 4.46,
    "dy_liq": 3.23,
    "spread": 0.16,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "UDR",
-   "nome": "UDR",
-   "setor": "Residencial",
-   "preco": 37.57,
-   "dy": 4.473007712082262,
-   "chg52w": -8.6576,
-   "payout_gaap": 116.79,
-   "div_ebitda": null,
-   "div_pl": 1.7702,
-   "payout_ffo": null,
-   "ust10y": 4.46,
-   "dy_liq": 3.13,
-   "spread": 0.01,
    "armadilhas": [],
    "veredito": "CARO",
    "qtd": 0,
@@ -602,25 +602,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "CPT",
-   "nome": "Camden Property",
-   "setor": "Residencial",
-   "preco": 109.02,
-   "dy": 3.8902651619414628,
-   "chg52w": -5.7343,
-   "payout_gaap": 119.14,
-   "div_ebitda": null,
-   "div_pl": 0.8942,
-   "payout_ffo": null,
-   "ust10y": 4.46,
-   "dy_liq": 2.72,
-   "spread": -0.57,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "RHP",
    "nome": "Ryman Hospitality",
    "setor": "Hotéis",
@@ -637,25 +618,6 @@
    "armadilhas": [
     "Alavancagem alta"
    ],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "ESS",
-   "nome": "Essex Property",
-   "setor": "Residencial",
-   "preco": 273.75,
-   "dy": 3.785027949289394,
-   "chg52w": -3.6266,
-   "payout_gaap": 115.62,
-   "div_ebitda": null,
-   "div_pl": 1.2272,
-   "payout_ffo": null,
-   "ust10y": 4.46,
-   "dy_liq": 2.65,
-   "spread": -0.67,
-   "armadilhas": [],
    "veredito": "CARO",
    "qtd": 0,
    "valor_usd": 0
@@ -984,6 +946,44 @@
    "spread": -0.0,
    "armadilhas": [],
    "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "ESS",
+   "nome": "Essex Property",
+   "setor": "Residencial",
+   "preco": 273.75,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.46,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "CPT",
+   "nome": "Camden Property",
+   "setor": "Residencial",
+   "preco": 109.02,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.46,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
