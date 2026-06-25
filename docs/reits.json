@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-06-25T12:00:53.363743+00:00",
+ "gerado_em": "2026-06-25T12:37:00.334224+00:00",
  "ust10y": 4.41,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 48,
+  "validos": 50,
   "total": 50,
   "alertas": []
  },
@@ -621,6 +621,27 @@
    "valor_usd": 0
   },
   {
+   "ticker": "RHP",
+   "nome": "Ryman Hospitality",
+   "setor": "Hotéis",
+   "preco": 129.77,
+   "dy": 3.8235530870160184,
+   "chg52w": 29.2401,
+   "payout_gaap": 116.7,
+   "div_ebitda": null,
+   "div_pl": 5.3015,
+   "payout_ffo": null,
+   "ust10y": 4.41,
+   "dy_liq": 2.68,
+   "spread": -0.59,
+   "armadilhas": [
+    "Alavancagem alta"
+   ],
+   "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
    "ticker": "REG",
    "nome": "Regency Centers",
    "setor": "Varejo",
@@ -811,6 +832,25 @@
    "valor_usd": 0
   },
   {
+   "ticker": "PLD",
+   "nome": "Prologis",
+   "setor": "Industrial",
+   "preco": 140.87,
+   "dy": 3.0382622275857174,
+   "chg52w": 30.2784,
+   "payout_gaap": 105.78,
+   "div_ebitda": null,
+   "div_pl": 0.6587,
+   "payout_ffo": null,
+   "ust10y": 4.41,
+   "dy_liq": 2.13,
+   "spread": -1.37,
+   "armadilhas": [],
+   "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
    "ticker": "EGP",
    "nome": "EastGroup Properties",
    "setor": "Industrial",
@@ -830,25 +870,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "PLD",
-   "nome": "Prologis",
-   "setor": "Industrial",
-   "preco": 140.87,
-   "dy": 2.946643717728055,
-   "chg52w": 30.2784,
-   "payout_gaap": 105.78,
-   "div_ebitda": null,
-   "div_pl": 0.6587,
-   "payout_ffo": null,
-   "ust10y": 4.41,
-   "dy_liq": 2.06,
-   "spread": -1.46,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "SBAC",
    "nome": "SBA Communications",
    "setor": "Torres",
@@ -862,6 +883,27 @@
    "ust10y": 4.41,
    "dy_liq": 1.85,
    "spread": -1.77,
+   "armadilhas": [
+    "Alavancagem alta"
+   ],
+   "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "IRM",
+   "nome": "Iron Mountain",
+   "setor": "Especializado",
+   "preco": 130.59,
+   "dy": 2.5973245152562754,
+   "chg52w": 24.076,
+   "payout_gaap": 233.19,
+   "div_ebitda": null,
+   "div_pl": 56.3822,
+   "payout_ffo": null,
+   "ust10y": 4.41,
+   "dy_liq": 1.82,
+   "spread": -1.81,
    "armadilhas": [
     "Alavancagem alta"
    ],
@@ -942,44 +984,6 @@
    "spread": -3.05,
    "armadilhas": [],
    "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "RHP",
-   "nome": "Ryman Hospitality",
-   "setor": "Hotéis",
-   "preco": 129.77,
-   "dy": null,
-   "chg52w": null,
-   "payout_gaap": null,
-   "div_ebitda": null,
-   "div_pl": null,
-   "payout_ffo": null,
-   "ust10y": 4.41,
-   "dy_liq": null,
-   "spread": null,
-   "armadilhas": [],
-   "veredito": "s/d",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "IRM",
-   "nome": "Iron Mountain",
-   "setor": "Especializado",
-   "preco": 130.59,
-   "dy": null,
-   "chg52w": null,
-   "payout_gaap": null,
-   "div_ebitda": null,
-   "div_pl": null,
-   "payout_ffo": null,
-   "ust10y": 4.41,
-   "dy_liq": null,
-   "spread": null,
-   "armadilhas": [],
-   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
