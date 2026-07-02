@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-07-02T11:46:37.009672+00:00",
+ "gerado_em": "2026-07-02T12:25:29.300409+00:00",
  "ust10y": 4.48,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 50,
+  "validos": 49,
   "total": 50,
   "alertas": []
  },
@@ -775,25 +775,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "HST",
-   "nome": "Host Hotels",
-   "setor": "Hotéis",
-   "preco": 23.35,
-   "dy": 3.374103753690426,
-   "chg52w": 47.133,
-   "payout_gaap": 64.69,
-   "div_ebitda": null,
-   "div_pl": 0.7742,
-   "payout_ffo": null,
-   "ust10y": 4.48,
-   "dy_liq": 2.36,
-   "spread": -1.11,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "FR",
    "nome": "First Industrial",
    "setor": "Industrial",
@@ -984,6 +965,25 @@
    "spread": -3.12,
    "armadilhas": [],
    "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "HST",
+   "nome": "Host Hotels",
+   "setor": "Hotéis",
+   "preco": 23.35,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.48,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
