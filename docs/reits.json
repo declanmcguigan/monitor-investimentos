@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-07-03T11:45:02.608655+00:00",
+ "gerado_em": "2026-07-03T12:23:44.592106+00:00",
  "ust10y": 4.49,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 49,
+  "validos": 47,
   "total": 50,
   "alertas": []
  },
@@ -309,25 +309,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "UDR",
-   "nome": "UDR",
-   "setor": "Residencial",
-   "preco": 41.09,
-   "dy": 4.283604135893649,
-   "chg52w": 1.2817,
-   "payout_gaap": 116.79,
-   "div_ebitda": null,
-   "div_pl": 1.7702,
-   "payout_ffo": null,
-   "ust10y": 4.49,
-   "dy_liq": 3.0,
-   "spread": -0.21,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "EPRT",
    "nome": "Essential Properties",
    "setor": "Net lease",
@@ -441,27 +422,6 @@
    "dy_liq": 2.87,
    "spread": -0.4,
    "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "LAMR",
-   "nome": "Lamar Advertising",
-   "setor": "Especializado",
-   "preco": 157.56,
-   "dy": 4.085801838610828,
-   "chg52w": 26.7273,
-   "payout_gaap": 120.03,
-   "div_ebitda": null,
-   "div_pl": 3.3929,
-   "payout_ffo": null,
-   "ust10y": 4.49,
-   "dy_liq": 2.86,
-   "spread": -0.4,
-   "armadilhas": [
-    "Alavancagem alta"
-   ],
    "veredito": "CARO",
    "qtd": 0,
    "valor_usd": 0
@@ -756,25 +716,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "WY",
-   "nome": "Weyerhaeuser",
-   "setor": "Especializado",
-   "preco": 23.79,
-   "dy": 3.389830508474576,
-   "chg52w": -10.8989,
-   "payout_gaap": 152.39,
-   "div_ebitda": null,
-   "div_pl": 0.5933,
-   "payout_ffo": null,
-   "ust10y": 4.49,
-   "dy_liq": 2.37,
-   "spread": -1.1,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "ELS",
    "nome": "Equity LifeStyle",
    "setor": "Comunidades",
@@ -865,6 +806,27 @@
    "dy_liq": 2.11,
    "spread": -1.47,
    "armadilhas": [],
+   "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "IRM",
+   "nome": "Iron Mountain",
+   "setor": "Especializado",
+   "preco": 117.16,
+   "dy": 2.8351107465135352,
+   "chg52w": 17.6187,
+   "payout_gaap": 233.19,
+   "div_ebitda": null,
+   "div_pl": 56.3822,
+   "payout_ffo": null,
+   "ust10y": 4.49,
+   "dy_liq": 1.98,
+   "spread": -1.65,
+   "armadilhas": [
+    "Alavancagem alta"
+   ],
    "veredito": "CARO",
    "qtd": 0,
    "valor_usd": 0
@@ -967,10 +929,48 @@
    "valor_usd": 0
   },
   {
-   "ticker": "IRM",
-   "nome": "Iron Mountain",
+   "ticker": "UDR",
+   "nome": "UDR",
+   "setor": "Residencial",
+   "preco": null,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.49,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "LAMR",
+   "nome": "Lamar Advertising",
    "setor": "Especializado",
-   "preco": 117.16,
+   "preco": 157.56,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.49,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "WY",
+   "nome": "Weyerhaeuser",
+   "setor": "Especializado",
+   "preco": 23.79,
    "dy": null,
    "chg52w": null,
    "payout_gaap": null,
