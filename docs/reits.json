@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-07-14T11:00:31.141648+00:00",
+ "gerado_em": "2026-07-14T11:50:51.421161+00:00",
  "ust10y": 4.62,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 49,
+  "validos": 50,
   "total": 50,
   "alertas": []
  },
@@ -680,6 +680,25 @@
    "valor_usd": 0
   },
   {
+   "ticker": "FRT",
+   "nome": "Federal Realty",
+   "setor": "Varejo",
+   "preco": 121.84,
+   "dy": 3.7097833223900194,
+   "chg52w": 28.4148,
+   "payout_gaap": 77.25,
+   "div_ebitda": null,
+   "div_pl": 1.5255,
+   "payout_ffo": null,
+   "ust10y": 4.62,
+   "dy_liq": 2.6,
+   "spread": -0.91,
+   "armadilhas": [],
+   "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
    "ticker": "AVB",
    "nome": "AvalonBay",
    "setor": "Residencial",
@@ -965,25 +984,6 @@
    "spread": -3.26,
    "armadilhas": [],
    "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "FRT",
-   "nome": "Federal Realty",
-   "setor": "Varejo",
-   "preco": 121.84,
-   "dy": null,
-   "chg52w": null,
-   "payout_gaap": null,
-   "div_ebitda": null,
-   "div_pl": null,
-   "payout_ffo": null,
-   "ust10y": 4.62,
-   "dy_liq": null,
-   "spread": null,
-   "armadilhas": [],
-   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
