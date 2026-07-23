@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-07-23T11:23:43.440235+00:00",
+ "gerado_em": "2026-07-23T12:09:17.111122+00:00",
  "ust10y": 4.67,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 50,
+  "validos": 49,
   "total": 50,
   "alertas": []
  },
@@ -737,25 +737,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "WY",
-   "nome": "Weyerhaeuser",
-   "setor": "Especializado",
-   "preco": 23.82,
-   "dy": 3.389830508474576,
-   "chg52w": -8.9797,
-   "payout_gaap": 152.39,
-   "div_ebitda": null,
-   "div_pl": 0.5933,
-   "payout_ffo": null,
-   "ust10y": 4.67,
-   "dy_liq": 2.37,
-   "spread": -1.28,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "ELS",
    "nome": "Equity LifeStyle",
    "setor": "Comunidades",
@@ -984,6 +965,25 @@
    "spread": -3.46,
    "armadilhas": [],
    "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "WY",
+   "nome": "Weyerhaeuser",
+   "setor": "Especializado",
+   "preco": 23.82,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.67,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
