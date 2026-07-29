@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-07-29T11:37:51.598850+00:00",
+ "gerado_em": "2026-07-29T12:27:14.399658+00:00",
  "ust10y": 4.61,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 50,
+  "validos": 49,
   "total": 50,
   "alertas": []
  },
@@ -460,27 +460,6 @@
    "dy_liq": 2.76,
    "spread": -0.66,
    "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "LAMR",
-   "nome": "Lamar Advertising",
-   "setor": "Especializado",
-   "preco": 162.21,
-   "dy": 3.9455027433573764,
-   "chg52w": 30.1741,
-   "payout_gaap": 120.03,
-   "div_ebitda": null,
-   "div_pl": 3.3929,
-   "payout_ffo": null,
-   "ust10y": 4.61,
-   "dy_liq": 2.76,
-   "spread": -0.66,
-   "armadilhas": [
-    "Alavancagem alta"
-   ],
    "veredito": "CARO",
    "qtd": 0,
    "valor_usd": 0
@@ -984,6 +963,25 @@
    "spread": -3.4,
    "armadilhas": [],
    "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "LAMR",
+   "nome": "Lamar Advertising",
+   "setor": "Especializado",
+   "preco": 162.21,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.61,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
