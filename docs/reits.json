@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-07-31T11:38:10.179517+00:00",
+ "gerado_em": "2026-07-31T12:24:49.745828+00:00",
  "ust10y": 4.68,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 50,
+  "validos": 49,
   "total": 50,
   "alertas": []
  },
@@ -543,27 +543,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "BXP",
-   "nome": "BXP (Boston Prop.)",
-   "setor": "Escritórios",
-   "preco": 71.67,
-   "dy": 3.9067950327891725,
-   "chg52w": 7.888,
-   "payout_gaap": 95.87,
-   "div_ebitda": null,
-   "div_pl": 3.2969,
-   "payout_ffo": null,
-   "ust10y": 4.68,
-   "dy_liq": 2.73,
-   "spread": -0.77,
-   "armadilhas": [
-    "Alavancagem alta"
-   ],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "BRX",
    "nome": "Brixmor Property",
    "setor": "Varejo",
@@ -984,6 +963,25 @@
    "spread": -3.47,
    "armadilhas": [],
    "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "BXP",
+   "nome": "BXP (Boston Prop.)",
+   "setor": "Escritórios",
+   "preco": 71.67,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.68,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
