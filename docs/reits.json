@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-08-04T11:37:46.538191+00:00",
+ "gerado_em": "2026-08-04T12:23:49.488803+00:00",
  "ust10y": 4.7,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 49,
+  "validos": 50,
   "total": 50,
   "alertas": []
  },
@@ -207,6 +207,27 @@
    "dy_liq": 3.59,
    "spread": 0.42,
    "armadilhas": [],
+   "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "NSA",
+   "nome": "National Storage",
+   "setor": "Self-storage",
+   "preco": 43.41,
+   "dy": 5.123595505617977,
+   "chg52w": 37.9847,
+   "payout_gaap": 249.21,
+   "div_ebitda": null,
+   "div_pl": 3.5993,
+   "payout_ffo": null,
+   "ust10y": 4.7,
+   "dy_liq": 3.59,
+   "spread": 0.42,
+   "armadilhas": [
+    "Alavancagem alta"
+   ],
    "veredito": "CARO",
    "qtd": 0,
    "valor_usd": 0
@@ -963,25 +984,6 @@
    "spread": -3.49,
    "armadilhas": [],
    "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "NSA",
-   "nome": "National Storage",
-   "setor": "Self-storage",
-   "preco": 43.41,
-   "dy": null,
-   "chg52w": null,
-   "payout_gaap": null,
-   "div_ebitda": null,
-   "div_pl": null,
-   "payout_ffo": null,
-   "ust10y": 4.7,
-   "dy_liq": null,
-   "spread": null,
-   "armadilhas": [],
-   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
