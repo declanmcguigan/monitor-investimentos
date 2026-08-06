@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-08-06T11:38:36.920804+00:00",
+ "gerado_em": "2026-08-06T12:24:42.813955+00:00",
  "ust10y": 4.63,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 50,
+  "validos": 48,
   "total": 50,
   "alertas": []
  },
@@ -564,25 +564,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "AMH",
-   "nome": "American Homes 4 Rent",
-   "setor": "Residencial",
-   "preco": 34.58,
-   "dy": 3.817235396182765,
-   "chg52w": -1.9841,
-   "payout_gaap": 99.58,
-   "div_ebitda": null,
-   "div_pl": 0.7245,
-   "payout_ffo": null,
-   "ust10y": 4.63,
-   "dy_liq": 2.67,
-   "spread": -0.81,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "REG",
    "nome": "Regency Centers",
    "setor": "Varejo",
@@ -750,25 +731,6 @@
    "ust10y": 4.63,
    "dy_liq": 2.37,
    "spread": -1.24,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "ELS",
-   "nome": "Equity LifeStyle",
-   "setor": "Comunidades",
-   "preco": 65,
-   "dy": 3.338461538461538,
-   "chg52w": 4.7542,
-   "payout_gaap": 104.06,
-   "div_ebitda": null,
-   "div_pl": 1.8913,
-   "payout_ffo": null,
-   "ust10y": 4.63,
-   "dy_liq": 2.34,
-   "spread": -1.29,
    "armadilhas": [],
    "veredito": "CARO",
    "qtd": 0,
@@ -984,6 +946,44 @@
    "spread": -3.42,
    "armadilhas": [],
    "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "AMH",
+   "nome": "American Homes 4 Rent",
+   "setor": "Residencial",
+   "preco": 34.58,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.63,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "ELS",
+   "nome": "Equity LifeStyle",
+   "setor": "Comunidades",
+   "preco": 65,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.63,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
