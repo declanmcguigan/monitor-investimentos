@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-08-12T10:32:48.868935+00:00",
+ "gerado_em": "2026-08-12T11:14:59.836276+00:00",
  "ust10y": 4.7,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 50,
+  "validos": 49,
   "total": 50,
   "alertas": []
  },
@@ -737,25 +737,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "HST",
-   "nome": "Host Hotels",
-   "setor": "Hotéis",
-   "preco": 22.29,
-   "dy": 3.589053387169135,
-   "chg52w": 45.5911,
-   "payout_gaap": 64.69,
-   "div_ebitda": null,
-   "div_pl": 0.7742,
-   "payout_ffo": null,
-   "ust10y": 4.7,
-   "dy_liq": 2.51,
-   "spread": -1.11,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "ELS",
    "nome": "Equity LifeStyle",
    "setor": "Comunidades",
@@ -984,6 +965,25 @@
    "spread": -3.49,
    "armadilhas": [],
    "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "HST",
+   "nome": "Host Hotels",
+   "setor": "Hotéis",
+   "preco": 22.29,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.7,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
