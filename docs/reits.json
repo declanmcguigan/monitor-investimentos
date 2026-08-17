@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-08-17T10:02:55.677742+00:00",
+ "gerado_em": "2026-08-17T10:53:47.207508+00:00",
  "ust10y": 4.68,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 49,
+  "validos": 50,
   "total": 50,
   "alertas": []
  },
@@ -479,6 +479,25 @@
    "armadilhas": [
     "Alavancagem alta"
    ],
+   "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "BRX",
+   "nome": "Brixmor Property",
+   "setor": "Varejo",
+   "preco": 29.98,
+   "dy": 4.10273515677118,
+   "chg52w": 13.6467,
+   "payout_gaap": 85.05,
+   "div_ebitda": null,
+   "div_pl": 1.8256,
+   "payout_ffo": null,
+   "ust10y": 4.68,
+   "dy_liq": 2.87,
+   "spread": -0.58,
+   "armadilhas": [],
    "veredito": "CARO",
    "qtd": 0,
    "valor_usd": 0
@@ -965,25 +984,6 @@
    "spread": -3.47,
    "armadilhas": [],
    "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
-   "ticker": "BRX",
-   "nome": "Brixmor Property",
-   "setor": "Varejo",
-   "preco": 29.98,
-   "dy": null,
-   "chg52w": null,
-   "payout_gaap": null,
-   "div_ebitda": null,
-   "div_pl": null,
-   "payout_ffo": null,
-   "ust10y": 4.68,
-   "dy_liq": null,
-   "spread": null,
-   "armadilhas": [],
-   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
