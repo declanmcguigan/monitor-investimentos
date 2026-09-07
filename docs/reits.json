@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-09-07T15:08:32.680897+00:00",
+ "gerado_em": "2026-09-07T15:56:50.714895+00:00",
  "ust10y": 4.78,
  "ust10y_fonte": "treasury",
  "premissas": {
@@ -14,7 +14,7 @@
   "ust10y_manual": 4.3
  },
  "saude": {
-  "validos": 50,
+  "validos": 49,
   "total": 50,
   "alertas": []
  },
@@ -872,25 +872,6 @@
    "valor_usd": 0
   },
   {
-   "ticker": "ELS",
-   "nome": "Equity LifeStyle",
-   "setor": "Comunidades",
-   "preco": 62.44,
-   "dy": 2.55386,
-   "chg52w": 1.1342,
-   "payout_gaap": 104.06,
-   "div_ebitda": null,
-   "div_pl": 1.8913,
-   "payout_ffo": null,
-   "ust10y": 4.78,
-   "dy_liq": 1.79,
-   "spread": -2.23,
-   "armadilhas": [],
-   "veredito": "CARO",
-   "qtd": 0,
-   "valor_usd": 0
-  },
-  {
    "ticker": "AMH",
    "nome": "American Homes 4 Rent",
    "setor": "Residencial",
@@ -984,6 +965,25 @@
    "spread": -3.57,
    "armadilhas": [],
    "veredito": "CARO",
+   "qtd": 0,
+   "valor_usd": 0
+  },
+  {
+   "ticker": "ELS",
+   "nome": "Equity LifeStyle",
+   "setor": "Comunidades",
+   "preco": 62.44,
+   "dy": null,
+   "chg52w": null,
+   "payout_gaap": null,
+   "div_ebitda": null,
+   "div_pl": null,
+   "payout_ffo": null,
+   "ust10y": 4.78,
+   "dy_liq": null,
+   "spread": null,
+   "armadilhas": [],
+   "veredito": "s/d",
    "qtd": 0,
    "valor_usd": 0
   }
